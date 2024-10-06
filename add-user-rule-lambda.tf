@@ -8,7 +8,7 @@ data "archive_file" "add_user_to_lambda" {
 # Lambda definition, attaching the role and input the Environment variables to be used to
 resource "aws_lambda_function" "add_assume_role_lambda" {
   filename         = "lambdas/add-user-to-role-lambda.zip"
-  function_name    = "AddAssumeRoleLambda"
+  function_name    = "add_assume_role_lambda"
   role             = aws_iam_role.lambda_role_add_user.arn
   handler          = "add-user-to-role-lambda.lambda_handler"
   runtime          = "python3.8"

@@ -31,9 +31,9 @@ An example of request for the lambda to use in the lambda
 
 ```
 {
-  "role_name": "rds_access_role",
+      "role_name": "rds_access_role",
   "user_arns": [
-    "arn:aws:iam::156041418374:user/test-user"
+    "arn:aws:iam::156041418374:user/user_test"
   ],
   "purpose": "test with ticket BLA-123",
   "ttl": 90

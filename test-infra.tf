@@ -47,3 +47,20 @@ resource "aws_iam_role_policy_attachment" "rds_access_role_policy_attach" {
   role       = aws_iam_role.rds_access_role.name
   policy_arn = aws_iam_policy.rds_write_policy.arn
 }
+
+# Create IAM Group
+resource "aws_iam_group" "test_group" {
+  name = "test_group"
+}
+
+# Create IAM User
+resource "aws_iam_user" "test_user" {
+  name = "user_test"
+  force_destroy = true
+}
+
+# Add userTest to testGroup
+resource "aws_iam_user_group_membership" "user_group_membership" {
+  user = aws_iam_user.test_user.name
+  groups = [aws_iam_group.test_group.name]
+}
