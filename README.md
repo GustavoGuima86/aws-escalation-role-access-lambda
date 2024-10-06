@@ -25,3 +25,17 @@ removal of the specified users from the role once the TTL has elapsed.
 
 ``terraform apply``
 
+## request example
+
+An example of request for the lambda to use in the lambda
+
+```
+{
+  "role_name": "rds_access_role",
+  "user_arns": [
+    "arn:aws:iam::156041418374:user/test-user"
+  ],
+  "purpose": "test with ticket BLA-123",
+  "ttl": 90
+}
+```

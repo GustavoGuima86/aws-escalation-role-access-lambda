@@ -9,9 +9,9 @@ lambda_client = boto3.client('lambda')
 
 def lambda_handler(event, context):
     # Extract input parameters
-    role_name = event['role_name']
-    user_arns = event['user_arns']  # List of user ARNs
-    message = event['message']
+    role_name = event['role_name'] # Role to be removed
+    user_arns = event['user_arns'] # List of user ARNs
+    message = event['message'] # Message with explain the purpose and possibly a Ticket number assigned for
 
     return remove_users_from_role(role_name, user_arns, message)
 
@@ -34,8 +34,9 @@ def remove_users_from_role(role_name, user_arns, message):
             RoleName=role_name,
             PolicyDocument=json.dumps(assume_role_policy)
         )
-
+        # Step 4: Log the changes
         print(message)
+
         return {
             'statusCode': 200,
             'body': json.dumps(message)

@@ -1,11 +1,11 @@
+# Creating the zip file from the Lambda
 data "archive_file" "add_user_to_lambda" {
   type        = "zip"
   source_file = "lambdas/add-user-to-role-lambda.py"
   output_path = "lambdas/add-user-to-role-lambda.zip"
 }
 
-
-
+# Lambda definition, attaching the role and input the Environment variables to be used to
 resource "aws_lambda_function" "add_assume_role_lambda" {
   filename         = "lambdas/add-user-to-role-lambda.zip"
   function_name    = "AddAssumeRoleLambda"
@@ -22,7 +22,7 @@ resource "aws_lambda_function" "add_assume_role_lambda" {
   }
 }
 
-# Lambda IAM role
+# Lambda IAM role for the add role lambda
 resource "aws_iam_role" "lambda_role_add_user" {
   name = "lambda_role_add_user"
 
@@ -77,6 +77,7 @@ resource "aws_iam_role_policy_attachment" "lambda_policy_attach_add_user" {
 }
 
 
+# Role to ne used by the Scheduler allowing this to execute the lambda
 resource "aws_iam_role" "scheduler_role" {
   name = "eventbridge_scheduler_lambda_role"
 
@@ -94,6 +95,7 @@ resource "aws_iam_role" "scheduler_role" {
   })
 }
 
+# Policy to ne used by the Scheduler allowing this to execute the lambda
 resource "aws_iam_role_policy" "scheduler_invoke_lambda_policy" {
   role = aws_iam_role.scheduler_role.id
 

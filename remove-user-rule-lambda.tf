@@ -1,9 +1,11 @@
+# Creating the zip file from the Lambda
 data "archive_file" "remove_user_to_lambda" {
   type        = "zip"
   source_file = "lambdas/remove-user-to-role-lambda.py"
   output_path = "lambdas/remove-user-to-role-lambda.zip"
 }
 
+# Lambda definition and attaching the role
 resource "aws_lambda_function" "remove_assume_role_lambda" {
   filename         = "lambdas/remove-user-to-role-lambda.zip"
   function_name    = "RemoveAssumeRoleLambda"
@@ -14,7 +16,7 @@ resource "aws_lambda_function" "remove_assume_role_lambda" {
   source_code_hash = data.archive_file.remove_user_to_lambda.output_base64sha256
 }
 
-# Lambda IAM role
+# Lambda IAM role for the Remove Role Lambda
 resource "aws_iam_role" "lambda_role_remove_user" {
   name = "lambda_role_remove_user"
 
